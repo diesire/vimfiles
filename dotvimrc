@@ -1,14 +1,239 @@
-set nocompatible
-filetype off                   " required!
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker nofoldenable:
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-" My Bundles here:
-"
-" original repos on github
-Bundle 'tpope/vim-fugitive'
 
-filetype plugin indent on     " required! 
+set nocompatible "Must be first line
+
+"Vundle plugin manager {
+	filetype off
+	if has("win16") || has("win32") || has("win64")|| has("win95")
+		set rtp+=~/vimfiles/bundle/vundle/
+	else
+		set rtp+=~/.vim/bundle/vundle/
+	endif
+	call vundle#rc()
+
+	"let Vundle manage Vundle
+	Bundle 'gmarik/vundle'
+"}
+
+
+"Vundle packages {
+	"Original repos on github
+	
+	"Git
+	Bundle 'tpope/vim-fugitive'
+	Bundle 'gregsexton/gitv'
+
+	"Color scheme
+	Bundle 'vim-scripts/wombat256.vim'
+
+	"Better indentation
+	Bundle 'nathanaelkane/vim-indent-guides'
+	let g:indent_guides_start_level = 2
+	let g:indent_guides_guide_size = 1
+	let g:indent_guides_space_guides = 1
+	let g:indent_guides_enable_on_vim_startup = 1
+	filetype plugin indent on
+"}
+
+"GUI {
+if has ('gui_running')
+    if has("unix")
+        set guifont=Ubuntu\ Mono:h14
+    endif
+
+    set guioptions-=T "Remoce toolbar
+    set background=dark
+    colorscheme wombat256mod
+
+    if has("gui_macvim")
+        let macvim_hig_shift_movement = 1 "Shift+Arrows select text
+    endif
+else
+    set background=dark
+endif
+"}
+
+"General {  
+    " Modeline
+    set modeline
+    set modelines=5 "default numbers of lines to read for modeline instructions
+
+    " Files
+    set nofsync            "improves performance, let OS decide when to flush disk
+    set autowrite "Writes on make/shell commands
+    set autoread "watch for file changes by other programs
+    set nowritebackup
+    set nobackup "turn backup off
+    set noswapfile
+    set hidden             "allow open other file without saving current file
+
+    set timeoutlen=250 "Time to wait after ESC (default causes an annoying delay)
+    set history=1000
+    set tabpagemax=150
+    
+
+    " Text
+    set nowrap		"wrap long lines
+    set encoding=utf-8
+    syntax on "syntax highlighting
+    set ffs=unix,dos,mac "Default file types
+    try
+        lang es_ES
+    catch
+    endtry
+
+
+    " Tabs and indent
+    set tabstop=4		"an indentation every four columns
+    set softtabstop=4      "vim sees 4 spaces as a tab
+    set shiftwidth=4       "indentation
+    set expandtab          "tabs mutate into spaces, if you wanna insert "real" tabs use Ctrl-v <tab> instance
+    set autoindent
+
+    " Keys
+    set whichwrap=b,s,h,l,<,>,[,]	"backspace and cursor keys wrap to
+    set backspace=indent,eol,start     "make backspace works like in other editors.
+
+    
+    " Console
+    set t_Co=256 "set 256 colors. Make sure your console supports it.
+    set lazyredraw "do not redraw the screen while macros are running. It improves performance
+
+    "Visual {
+    set mouse=a "automatically enable mouse usage
+    set noerrorbells       "disable annoying beeps
+    set novisualbell
+    set linespace=0		"No extra spaces between rows
+
+    set textwidth=80
+
+    "Windows
+    set winminheight=1     "never let a window to be less than 1px height
+    set winminwidth=1
+    set splitright         "split vertically to the right.
+    set splitbelow         "split horizontally below.
+    
+    " Scroll
+    set scrolloff=3        "show enough context
+    set sidescrolloff=2
+    set scrolljump=5 	"lines to scroll when cursor leaves screen
+
+    " Ruler
+    set ruler "show the cursor position all the time
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) "a ruler on steroids
+
+    " ColorColumn
+    set colorcolumn=+1	"mark the ideal max text width
+    "Esta linea sompbrea el caracter 81 para marcar que se está excediendo
+    "au BufEnter,BufNewFile,BufRead * exec 'match Todo /\%' . 81 . 'v/'
+
+    " CursorLine
+    set cursorline "highlight the screen line of the cursor
+    hi cursorline guibg=#333333 "highlight bg color of current line
+    hi CursorColumn guibg=#777777 "highlight cursor
+
+    " Status line
+    set statusline=%<%f%m%r\ %=\|\ Dec:\ %-3b\ Hex:\ 0x%2B\ \|\ %20(%4l,%4c%V\ \|\ %3P%)
+    set laststatus=2
+    "{
+    "   "May collide against the StatusBar plugin
+        "if has('statusline')
+        "   set laststatus=2
+        "
+        "	" Broken down into easily includeable segments
+        "	set statusline=%<%f\    " Filename
+        "	set statusline+=%w%h%m%r " Options
+        "	set statusline+=%{fugitive#statusline()} "  Git Hotness
+        "	set statusline+=\ [%{&ff}/%Y]            " filetype
+        "	set statusline+=\ [%{getcwd()}]          " current dir
+        "	"set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+        "	set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+        "endif
+    "}
+
+    " Tabs and trailing spaces
+    "set list
+    "set listchars=tab:▷⋅,trail:⋅,nbsp:⋅ "uses utf8
+    "set listchars=tab:»\ ,trail:·,precedes:…,extends:…,nbsp:⋅ 
+    "set listchars=tab:\|\ 
+
+    " Commands
+    set autochdir          "change to the current directory
+    set showmode "display the current mode
+    set showcmd "show the command you're typing
+    set wildmenu "enhance command completion
+    set wildmode=list:longest,full " command <Tab> completion, list matches, then longest common part, then all
+    set wildignore=*/.svn/*,CVS,*/.git,*/.hg/*,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp
+
+    " Line numbers
+    set number "show line numbers
+    "}
+    
+    " Search
+    set hlsearch           "highlight search
+    set incsearch          "incremental search, search as you type
+    set showfulltag        "show as much as possible
+    set ignorecase         "ignore case when searching
+    set smartcase		"case sensitive when uc present
+
+    "folding settings
+    set foldmethod=syntax "fold based on indent
+    set foldnestmax=3 "deepest fold is 3 levels
+    set nofoldenable "fold by default
+    set foldlevel=0
+
+"}
+
+
+
+
+
+"Keybindings {
+    
+    " The default leader is '\', but many people prefer ',' as it's in a standard location
+    let mapleader = ','
+    
+    " Permite seleccionar texto con SHIFT+flechas
+    if has("gui_macvim")
+	let macvim_hig_shift_movement = 1
+    endif
+
+    set pastetoggle=<F12>	"pastetoggle (sane indentation on pastes)
+
+    " For when you forget to sudo.. Really Write the file.
+    cmap w!! w !sudo tee % >/dev/null
+
+    " Better folding toggle
+    nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+    nnoremap <silent> <S-Space> zA<CR>
+"}
+
+"JavaScript section {
+    "au FileType javascript call JavaScriptFold()
+    "au FileType javascript setl fen
+    "au FileType javascript setl nocindent
+
+    "au FileType javascript imap <c-t> AJS.log();<esc>hi
+    "au FileType javascript imap <c-a> alert();<esc>hi
+
+    "au FileType javascript inoremap <buffer> $r return
+    "au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
+
+    "function! JavaScriptFold()
+    "   setl foldmethod=syntax
+    "    setl foldlevelstart=1
+    "    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+    "
+    "    function! FoldText()
+    "        return substitute(getline(v:foldstart), '{.*', '{...}', '')
+    "    endfunction
+    "    setl foldtext=FoldText()
+    "endfunction
+"}
+
+
+" Markdown section {
+    "Markdown to HTML  
+    "au FileType Markdown nmap <leader>md :%!/usr/local/bin/markdown --html4tags <cr>
+"}
