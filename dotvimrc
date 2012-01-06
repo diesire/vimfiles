@@ -1,14 +1,14 @@
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker foldenable:
+" vim: set foldmarker={{{,}}} foldlevel=0 foldmethod=marker foldenable:
 
-"Notes {
+"Notes {{{
     "Vim config for MacVim 7.3 (snapshot 63)
     "@author: Pablo Escalada <diesire@gmail.com>
     "@version: v0.1 - 05/01/2012
-"}
-"
+"}}}
+
 set nocompatible "Must be first line
 
-"Vundle plugin manager {
+"Vundle plugin manager {{{
     filetype off
     if has("win16") || has("win32") || has("win64")|| has("win95")
         set rtp+=~/vimfiles/bundle/vundle/
@@ -19,72 +19,75 @@ set nocompatible "Must be first line
 
     "let Vundle manage Vundle
     Bundle 'gmarik/vundle'
-"}
+"}}}
 
-"Vundle packages {
-    " Original repos on github
-    
-    " Git
-    Bundle 'tpope/vim-fugitive'
-    Bundle 'gregsexton/gitv'
+ "Vundle packages {{{
+    "Fugitive {{{
+        Bundle 'tpope/vim-fugitive'
+    "}}}
+    "Gitv {{{
+        Bundle 'gregsexton/gitv'
+    "}}}
     "Bundle 'mattn/gist-vim'
+    "Wombat {{{
+        Bundle 'vim-scripts/wombat256.vim'
+    "}}}
+    "Indent guides {{{
+        Bundle 'nathanaelkane/vim-indent-guides'
+        let g:indent_guides_start_level = 1
+        let g:indent_guides_guide_size = 1
+        let g:indent_guides_space_guides = 1
+        let g:indent_guides_enable_on_vim_startup = 1
+    "}}}
+    "Vim preview {{{
+        Bundle 'greyblake/vim-preview'
+        "<Leader>P - will open current file converted to HTML in your browser.
+    "}}}
+    "NerdTree {{{
+        Bundle 'scrooloose/nerdtree'
 
-    " Color scheme
-    Bundle 'vim-scripts/wombat256.vim'
-
-    " Better indentation
-    Bundle 'nathanaelkane/vim-indent-guides'
-    let g:indent_guides_start_level = 1
-    let g:indent_guides_guide_size = 1
-    let g:indent_guides_space_guides = 1
-    let g:indent_guides_enable_on_vim_startup = 1
-
-    " Markdown
-    Bundle 'greyblake/vim-preview'
-
-    " File browser
-    Bundle 'scrooloose/nerdtree'
-    "{
-    "Open a NERDTree automatically when vim starts up if no files were specified
-    autocmd vimenter * if !argc() | NERDTree | endif
-    "Close vim if the only window left open is a NERDTree
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-    let NERDTreeIgnore=['\.bjk$', '\.b[xm]i$', '\.ms[ux]$' , '\.bd[bm]$' ,
-         \ '\.bfi$' , '\.bpk$' , '\.bsk$' , '\.bwm$' , '\.exe$' , '\.tmp$' ,
-         \ '\.exe$' , '\.ico$' , '\.lnk$' , '\.sfv$', '\~$' ]
-    let NERDTreeWinSize=40
-    noremap <C-S-e> :NERDTreeToggle<CR>
-    "}
-
-    " Key bindings
-    Bundle 'ervandew/supertab'
-
-    " Syntax checking
-    Bundle 'scrooloose/syntastic'
-
-    " Enhanced statusBar
+        "Open a NERDTree automatically when vim starts up if no files were specified
+        autocmd vimenter * if !argc() | NERDTree | endif
+        "Close vim if the only window left open is a NERDTree
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+        let NERDTreeIgnore=['\.bjk$', '\.b[xm]i$', '\.ms[ux]$' , '\.bd[bm]$' ,
+             \ '\.bfi$' , '\.bpk$' , '\.bsk$' , '\.bwm$' , '\.exe$' , '\.tmp$' ,
+             \ '\.exe$' , '\.ico$' , '\.lnk$' , '\.sfv$', '\~$' ]
+        let NERDTreeWinSize=40
+        noremap <C-S-e> :NERDTreeToggle<CR>
+    "}}}
+    "Supertab {{{
+        Bundle 'ervandew/supertab'
+    "}}}
+    "Neocomplcache {{{
+        Bundle 'Shougo/neocomplcache'
+        let g:neocomplcache_enable_at_startup = 1
+    "}}}
+    "Syntastic {{{
+        Bundle 'scrooloose/syntastic'
+    "}}}
+    "Enhanced statusBar {{{
     Bundle 'dickeytk/status.vim'
-    "Load Fugitive
-    "let g:statusline_fugitive = 1
-    "No Load RVM
-    let g:statusline_rvm = 0
-    "Load Syntastic
-    let g:statusline_syntastic = 1
-    "Turn statusline on/off
-    let g:statusline_enabled = 1
-    "Turn on full paths
-    let g:statusline_fullpath = 1
-
-    " TODO, XXX and FIXME like eclipse
+        "Load Fugitive
+        "let g:statusline_fugitive = 1
+        "No Load RVM
+        let g:statusline_rvm = 0
+        "Load Syntastic
+        let g:statusline_syntastic = 1
+        "Turn statusline on/off
+        let g:statusline_enabled = 1
+        "Turn on full paths
+        let g:statusline_fullpath = 1
+    "}}}
+    "Tasklist {{{
     Bundle 'TaskList.vim'
+    "TODO, XXX and FIXME like eclipse
+    "}}}
+"}}}
 
+filetype plugin indent on "DO NOT DELETE - Plugins last line
 
-
-    " Plugins last line
-    filetype plugin indent on
-"}
-
-"GUI {
+"GUI {{{
 if has ('gui_running')
     if has("unix")
         set guifont=Ubuntu\ Mono:h14
@@ -100,9 +103,9 @@ if has ('gui_running')
 else
     set background=dark
 endif
-"}
+"}}}
 
-"General {  
+"General {{{
     " Modeline
     set modeline
     set modelines=5 "default numbers of lines to read for modeline instructions
@@ -147,8 +150,9 @@ endif
     " Console
     set t_Co=256 "set 256 colors. Make sure your console supports it.
     set lazyredraw "do not redraw the screen while macros are running. It improves performance
+    set title
 
-    "Visual {
+    "Visual {{{
     set mouse=a "automatically enable mouse usage
     set noerrorbells       "disable annoying beeps
     set novisualbell
@@ -188,7 +192,7 @@ endif
     " Status line
     set statusline=%<%f%m%r\ %=\|\ Dec:\ %-3b\ Hex:\ 0x%2B\ \|\ %20(%4l,%4c%V\ \|\ %3P%)
     set laststatus=2
-    "{
+    "{ 
     "   "May collide against the StatusBar plugin
         "if has('statusline')
         "   set laststatus=2
@@ -205,10 +209,11 @@ endif
     "}
 
     " Tabs and trailing spaces
-    "set list
+    set list
     "set listchars=tab:▷⋅,trail:⋅,nbsp:⋅ "uses utf8
     "set listchars=tab:»\ ,trail:·,precedes:…,extends:…,nbsp:⋅ 
     "set listchars=tab:\|\ 
+    set listchars=tab:»\ ,trail:·,nbsp:⎵,precedes:←,extends:→ sbr=↪
 
     " Commands
     set autochdir          "change to the current directory
@@ -220,7 +225,7 @@ endif
 
     " Line numbers
     set number "show line numbers
-    "}
+    "}}}
     
     " Search
     set hlsearch           "highlight search
@@ -235,16 +240,15 @@ endif
     set foldenable "fold by default
     set foldlevel=3
     set foldcolumn=3
-"}
+"}}}
 
-"Keybindings {
-    
+"Keybindings {{{
     " The default leader is '\', but many people prefer ',' as it's in a standard location
     let mapleader = ','
     
     " Permite seleccionar texto con SHIFT+flechas
     if has("gui_macvim")
-    let macvim_hig_shift_movement = 1
+        let macvim_hig_shift_movement = 1
     endif
 
     set pastetoggle=<F12>   "pastetoggle (sane indentation on pastes)
@@ -253,26 +257,94 @@ endif
     cmap w!! w !sudo tee % >/dev/null
 
     " Better folding toggle
+    " If line has fold then toggle, else do default stuff
     nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-    nnoremap <silent> <S-Space> zA<CR>
+    " If line has fold then toggle recursively, else do default stuff
+    nnoremap <silent> <S-Space> @=(foldlevel('.')?'zA':"\<S-Space>")<CR>
 
     "noremap <F4> :silent !/usr/bin/konsole --workdir :pwd<CR>
     nnoremap <silent> <F8> :TlistToggle<CR>
-    "quickly clear the search string (to clear highlights)
-    nnoremap <leader><space> :noh<CR>
+
+    " Press enter to clear the current search highlight.
+    nnoremap <silent><CR> :nohlsearch<CR><CR>
 
     "show/Hide hidden Chars
     map <leader><F12> :set invlist<CR>
 
-    " visual shifting (does not exit Visual mode)
-    vnoremap < <gv
-    vnoremap > >gv
+    " easy indentation in visual mode
+    " This keeps the visual selection active after indenting.
+    " Usually the visual selection is lost after you indent it.
+    vmap > >gv
+    vmap < <gv
 
     "noremap <leader><F5> :CheckSyntax<cr>
     "let g:checksyntax_auto = 1
-"}
+"}}}
 
-"JavaScript section {
+"Filetypes {{{
+"Default section {{{
+    function! JavaScriptFold()
+"       setl foldmethod=syntax
+"        setl foldlevelstart=1
+        syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+
+        function! FoldText()
+            return substitute(getline(v:foldstart), '{.*', '{...}', '')
+        endfunction
+        setl foldtext=FoldText()
+    endfunction
+
+    function! CustomFold()
+        if has("folding")
+            set foldtext=MyFoldText()
+            function! MyFoldText()
+                " for now, just don't try if version isn't 7 or higher
+                if v:version < 701
+                    return foldtext()
+                endif
+                " clear fold from fillchars to set it up the way we want later
+                let &l:fillchars = substitute(&l:fillchars,',\?fold:.','','gi')
+                let l:numwidth = (v:version < 701 ? 8 : &numberwidth)
+                if &fdm=='diff'
+                    let l:linetext=''
+                    let l:foldtext='---------- '.(v:foldend-v:foldstart+1).' lines the same ----------'
+                    let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+                    let l:align = (l:align / 2) + (strlen(l:foldtext)/2)
+                    " note trailing space on next line
+                    setlocal fillchars+=fold:\ 
+                elseif !exists('b:foldpat') || b:foldpat==0
+                    let l:foldtext = ' '.(v:foldend-v:foldstart).' lines folded'.v:folddashes.'|'
+                    let l:endofline = (&textwidth>0 ? &textwidth : 80)
+                    let l:linetext = strpart(getline(v:foldstart),0,l:endofline-strlen(l:foldtext))
+                    let l:align = l:endofline-strlen(l:linetext)
+                    setlocal fillchars+=fold:-
+                elseif b:foldpat==1
+                  let l:align = winwidth(0)-&foldcolumn-(&nu ? Max(strlen(line('$'))+1, l:numwidth) : 0)
+                    let l:foldtext = ' '.v:folddashes
+                    let l:linetext = substitute(getline(v:foldstart),'\s\+$','','')
+                    let l:linetext .= ' ---'.(v:foldend-v:foldstart-1).' lines--- '
+                    let l:linetext .= substitute(getline(v:foldend),'^\s\+','','')
+                    let l:linetext = strpart(l:linetext,0,l:align-strlen(l:foldtext))
+                    let l:align -= strlen(l:linetext)
+                    setlocal fillchars+=fold:-
+                endif
+                return printf('%s%*s', l:linetext, l:align, l:foldtext)
+          endfunction
+        endif
+    endfunction
+
+    "let b:foldpat=1
+    call CustomFold()
+    "au FileType javascript setl fen
+    "au FileType javascript setl nocindent
+
+    "au FileType javascript imap <c-t> AJS.log();<esc>hi
+    "au FileType javascript imap <c-a> alert();<esc>hi
+
+    "au FileType javascript inoremap <buffer> $r return
+    "au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
+    "}}}
+"JavaScript section {{{
     "au FileType javascript call JavaScriptFold()
     "au FileType javascript setl fen
     "au FileType javascript setl nocindent
@@ -293,18 +365,17 @@ endif
     "    endfunction
     "    setl foldtext=FoldText()
     "endfunction
-"}
-
-
-" Markdown section {
+"}}}
+" Markdown section {{{
     "Markdown to HTML  
     "au FileType Markdown nmap <leader>md :%!/usr/local/bin/markdown --html4tags <cr>
-"}
-"Printer Options
+"}}}
+"}}}
+"Printer Options {{{
     set printoptions=header:3,number:y,left:10mm,right:10mm,top:10mm,bottom:10mm
     if has("win32")
         set printfont=Anonymous_Pro:h10
     elseif has("unix")
         set printfont=Anonymous\ Pro\ 10
     endif
-"}
+"}}}
